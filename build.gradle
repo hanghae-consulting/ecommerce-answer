@@ -1,0 +1,70 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+bootJar {
+	enabled = false
+}
+jar {
+	enabled = true
+}
+
+repositories {
+	mavenCentral()
+}
+
+subprojects { // 모든 하위 모듈들에 이 설정을 적용합니다.
+	group 'com.example'
+	version '0.0.1-SNAPSHOT'
+
+	sourceCompatibility = '17'
+
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.3"
+		}
+	}
+
+	dependencies { // 모든 하위 모듈에 추가 될 의존성 목록입니다.
+		implementation 'org.springframework.boot:spring-boot-starter'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		// Spring Sesson
+		implementation 'org.springframework.session:spring-session-data-redis'
+
+		// JWT 라이브러리 추가 (jjwt)
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+		runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+		runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON 처리용
+
+		// Lombok 추가
+		compileOnly 'org.projectlombok:lombok:1.18.30'
+		annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+		// Caffeine Cache: 로컬 캐싱 라이브러리
+		implementation 'com.github.ben-manes.caffeine:caffeine'
+
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testCompileOnly 'org.projectlombok:lombok:1.18.30'
+		testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+	}
+	test {
+		useJUnitPlatform()
+	}
+}

@@ -1,0 +1,30 @@
+springBoot{
+    mainClass.set('com.example.RedisApplication') // 여기에 실제 메인 클래스의 경로를 지정
+}
+
+bootJar {
+    archiveFileName = 'service-redis.jar'
+}
+
+dependencies {
+    // Spring Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // MySQL Driver
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    // Lombok for annotations like @Data, @RequiredArgsConstructor
+    // Caffeine Cache: 로컬 캐싱 라이브러리
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'io.lettuce:lettuce-core'
+    // Spring Session Data Redis
+    implementation 'org.springframework.session:spring-session-data-redis'
+    // Redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.27.0'
+    // H2 Database
+    runtimeOnly 'com.h2database:h2'
+    // Spring Boot DevTools (Optional)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

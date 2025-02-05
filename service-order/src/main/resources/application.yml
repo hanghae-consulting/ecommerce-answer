@@ -1,0 +1,49 @@
+server:
+  port: 8083
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: true
+        same-site: Strict
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  kafka:
+    bootstrap-servers: localhost:10000,localhost:10001,localhost:10002
+
+  data:
+    redis:
+      cluster:
+        nodes:
+          - localhost:7001
+          - localhost:7002
+          - localhost:7003
+          - localhost:7004
+          - localhost:7005
+          - localhost:7006
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  session:
+    timeout: 30m # 세션 만료 시간 설정
+
+jwt:
+  secret: 46930c6e2098076c2ffdc8f1de5d7095debe589eea5b0f43819599a3749d88e26fff284659a26f4baecffc1e7ba574d24d4da5164bf2cf21670ce983d58eb91c
+  expirationMs: 86400000
+
+
